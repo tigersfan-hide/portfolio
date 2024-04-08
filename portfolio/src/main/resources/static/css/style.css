@@ -1,10 +1,81 @@
+html{
+	font-size: 14px;
+}
+.offcanvas-title{
+	font-size: 20px;
+}
+
 header{
 	background-color: #F2E6D8
 }
+
+
+
+body{
+	font-family: 'Noto Sans JP', sans-serif;
+}
+
+a{
+	color: #5196a6;
+	text-decoration: none !important;
+}
+
+a:hover{
+	color: #407784;
+}
+
+footer{
+	height: 60px;
+	bottom: 0;
+	background-color: #f2f0eb
+}
+
+.nagoyameshi-wrapper{
+	min-height: 100vh;
+	padding-bottom: 60px;
+	box-sizing: border-box;
+}
+
+.nagoyameshi-navbar {
+	min-height: 60px;
+}
+
+.nagoyameshi.logo{
+	height: 30px;
+}
+
+h2 {
+   font-size: 1.5rem;
+}
+
 .nagoyameshi-btn {
 	background-color: #5196a6 !important;   
 	transition: 0.1s;
- }
- footer{
-	background-color: #f2f0eb
+}
+
+.nagoyameshi-btn {
+	opacity: 0.8;
+}
+
+.nagoyameshi-page-link {
+   color: #5196a6;
+}
+ 
+ .nagoyameshi-page-link:hover {
+   color: #407784;
+}
+ 
+ .nagoyameshi-active {
+   background-color: #5196a6 !important;
+   border-color: #5196a6 !important;
+}
+
+.samuraitravel-pre-wrap {
+   white-space: pre-wrap;
+}
+
+@media screen and (min-width: 1400px) {
+   .nagoyameshi-container {
+     max-width: 1200px;
+   }
  }
