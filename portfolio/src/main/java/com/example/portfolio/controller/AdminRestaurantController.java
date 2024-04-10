@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.portfolio.entity.Restaurant;
+import com.example.portfolio.form.RestaurantRegisterForm;
 import com.example.portfolio.repository.RestaurantRepository;
 
 @Controller
@@ -46,5 +47,13 @@ public class AdminRestaurantController {
 		model.addAttribute("restaurant", restaurant);
 		
 		return "/admin/restaurants/show";
+	}
+	
+	@GetMapping("/register")
+	public String register(Model model) {
+		
+		model.addAttribute("RestaurantRegisterForm", new RestaurantRegisterForm());
+		
+		return "/admin/restaurants/register";
 	}
 }

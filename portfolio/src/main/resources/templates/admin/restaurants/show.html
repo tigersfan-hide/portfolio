@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="https://www.thymeleaf.org">
 	<head>
 		<div th:replace="~{fragment::meta}"></div>
 		
@@ -18,7 +18,6 @@
 									<li class="breadcrumb-item"><a th:href="@{/admin/restaurants}">店舗一覧</a></li>
 									<li class="breadcrumb-item active" aria-current="page">店舗詳細</li>
 								</ol>
-								
 							</nav>
 							<h2 class="mb-4 text-center" th:text="${restaurant.getName()}"></h2>
 							<div class="d-flex justify-content-end align-items-end mb-3">
