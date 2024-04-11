@@ -8,11 +8,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.Data;
 
 @Entity
 @Table (name = "restaurants")
-@Data
 public class Restaurant {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +18,7 @@ public class Restaurant {
 	private Integer id;
 	
 	@Column(name = "category_id")
-	private Integer categoryId;
+	private Byte categoryId;
 	
 	@Column(name = "name")
 	private String name;
@@ -54,4 +52,5 @@ public class Restaurant {
 
 	@Column(name = "updated_at", insertable = false, updatable = false)
 	private Timestamp updatedAt;
+
 }

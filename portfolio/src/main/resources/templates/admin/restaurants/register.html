@@ -22,7 +22,7 @@
 							</nav>
 							<h2 class="mb-4 text-center">店舗登録</h2>
 							
-							<form method="post" th:action="@{/admin/restaurants/create}" th:object="${RestaurantRegisterForm}" enctype="multipart/form-data">
+							<form method="post" th:action="@{/admin/restaurants/create}" th:object="${restaurantRegisterForm}" enctype="multipart/form-data">
 								<div class="form-group mb-3 row">
 									<div class="col-md-4">
 										<label for="name" class="col-form-label text-md-left fw-bold">店舗名</label>
@@ -125,5 +125,6 @@
 			<div th:replace="~{fragment::footer}"></div>
 		</div>
 		<div th:replace="~{fragment::scripts}"></div>
+		<script th:src="@{/js/preview.js}"></script> 
 	</body>
 </html>
