@@ -53,7 +53,7 @@ h2 {
 	transition: 0.1s;
 }
 
-.nagoyameshi-btn {
+.nagoyameshi-btn:hover {
 	opacity: 0.8;
 }
 
@@ -61,18 +61,35 @@ h2 {
    color: #5196a6;
 }
  
- .nagoyameshi-page-link:hover {
+.nagoyameshi-page-link:hover {
    color: #407784;
 }
  
- .nagoyameshi-active {
+.nagoyameshi-active {
    background-color: #5196a6 !important;
    border-color: #5196a6 !important;
 }
 
-.samuraitravel-pre-wrap {
+.nagoyameshi-pre-wrap {
    white-space: pre-wrap;
 }
+
+.nagoyameshi-link-danger {
+     color: #f2594b;
+ }
+ 
+.nagoyameshi-link-danger:hover {
+     color: #a63c3c;
+ }
+ 
+.nagoyameshi-btn-danger {
+     background-color: #f2594b !important;
+     transition: 0.1s;
+ }
+ 
+ .nagoyameshi-btn-danger:hover {
+   opacity: 0.8;   
+ }
 
 @media screen and (min-width: 1400px) {
    .nagoyameshi-container {

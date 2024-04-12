@@ -50,7 +50,7 @@ public class AdminRestaurantController {
 	}
 	
 	@GetMapping("/{id}")
-	public String show(@PathVariable(name= "id") Integer id, Model model){
+	public String show(@PathVariable(name = "id") Integer id, Model model){
 		Restaurant restaurant = restaurantRepository.getReferenceById(id);
 		
 		model.addAttribute("restaurant", restaurant);
@@ -72,11 +72,11 @@ public class AdminRestaurantController {
 			return "admin/restaurants/register";
 		}
 		restaurantService.create(restaurantRegisterForm);
-		redirectAttributes.addFlashAttribute("successMessage", "民宿を登録しました。");
+		redirectAttributes.addFlashAttribute("successMessage", "店舗を登録しました。");
 		return "redirect:/admin/restaurants";
 	}
 	@GetMapping("/{id}/edit")
-	public String edit(@PathVariable(name= "id") Integer id, Model model) {
+	public String edit(@PathVariable(name = "id") Integer id, Model model) {
 		Restaurant restaurant = restaurantRepository.getReferenceById(id);
 		String imageName = restaurant.getImageName();
 		RestaurantEditForm restaurantEditForm = new RestaurantEditForm(restaurant.getId(), restaurant.getCategoryId(), restaurant.getName(), null, restaurant.getAddress(), restaurant.getPhoneNumber(), restaurant.getDescription(), restaurant.getBudget(), restaurant.getOpeningHours(), restaurant.getCapacity(), restaurant.getHoliday());
@@ -85,5 +85,22 @@ public class AdminRestaurantController {
 		model.addAttribute("restaurantEditForm", restaurantEditForm);
 		return "admin/restaurants/edit";
 	}
-
+	
+	@PostMapping("/{id}/update")
+	public String update(@ModelAttribute @Validated RestaurantEditForm restaurantEditForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+		if(bindingResult.hasErrors()) {
+			return "admin/restaurants/edit";
+		}
+		restaurantService.update(restaurantEditForm);
+		redirectAttributes.addFlashAttribute("successMessage", "店舗を登録しました。");
+		return "redirect:/admin/restaurants";
+	}
+	
+	@PostMapping("/{id}/delete")
+	public String delete(@PathVariable(name = "id") Integer id, RedirectAttributes redirectAttributes) {
+		restaurantRepository.deleteById(id);
+		redirectAttributes.addFlashAttribute("successMessage", "民宿を削除しました。");
+		
+		return "redirect:admin/restaurants";
+	}
 }

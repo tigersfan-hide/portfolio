@@ -1,3 +1,9 @@
+--カテゴリーtable
+INSERT IGNORE INTO categorys (id,category) VALUES (1,'焼肉');
+INSERT IGNORE INTO categorys (id,category) VALUES (2,'ラーメン');
+INSERT IGNORE INTO categorys (id,category) VALUES (3,'鉄板料理');
+INSERT IGNORE INTO categorys (id,category) VALUES (4,'居酒屋');
+INSERT IGNORE INTO categorys (id,category) VALUES (5,'イタリアン');
 -- 店舗table
 INSERT IGNORE INTO restaurants (restaurant_id,category_id,name,image_name,address,phone_number,description,budget,opening_hours,capacity,holiday ) VALUES (1,1,'焼肉　神宮','image_yakiniyu1.jpg','愛知県名古屋市熱田区金山町1-16-16','050-5872-2335','名古屋老舗のお店。老舗の味をご堪能ください。','4,000~5,000','17:00~00:00 L.O. 23:30',46,'火曜日(祝日の場合は営業)');
 INSERT IGNORE INTO restaurants (restaurant_id,category_id,name,image_name,address,phone_number,description,budget,opening_hours,capacity,holiday ) VALUES (2,1,'焼肉　老中','image_yakiniyu2.jpg','愛知県名古屋市西区那古野2-19-23ZERO-NEXT E','050-5868-0811','名古屋老舗のお店。老舗の味をご堪能ください。','10,000~15,000','17:00~23:00',14,'不定休');

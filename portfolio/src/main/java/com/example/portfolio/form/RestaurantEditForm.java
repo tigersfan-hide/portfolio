@@ -12,7 +12,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class RestaurantEditForm {
 	@NotNull
-    private Integer restaurantId;
+    private Integer id;
 	
 	@NotNull
     private Byte categoryId;

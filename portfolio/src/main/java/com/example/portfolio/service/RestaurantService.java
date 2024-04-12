@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.portfolio.entity.Restaurant;
+import com.example.portfolio.form.RestaurantEditForm;
 import com.example.portfolio.form.RestaurantRegisterForm;
 import com.example.portfolio.repository.RestaurantRepository;
 
@@ -36,6 +37,7 @@ public class RestaurantService {
 		}
 		
 		restaurant.setName(restaurantRegisterForm.getName());
+		restaurant.setCategoryId(restaurantRegisterForm.getCategoryId());
 		restaurant.setAddress(restaurantRegisterForm.getAddress());
 		restaurant.setPhoneNumber(restaurantRegisterForm.getPhoneNumber());
 		restaurant.setDescription(restaurantRegisterForm.getDescription());
@@ -45,6 +47,31 @@ public class RestaurantService {
 		restaurant.setHoliday(restaurantRegisterForm.getHoliday());
 		restaurantRepository.save(restaurant);
 	}
+	
+	@Transactional
+	public void update(RestaurantEditForm restaurantEditForm){
+		Restaurant restaurant = restaurantRepository.getReferenceById(restaurantEditForm.getId());
+		MultipartFile imageFile = restaurantEditForm.getImageFile();
+		
+		if(!imageFile.isEmpty()) {
+			String imageName = imageFile.getOriginalFilename();
+			String hashedImageName = generateNewFileName(imageName);
+			Path filePath = Paths.get("src/main/resources/static/storage/" + hashedImageName);
+			copyImageFile(imageFile,filePath);
+			restaurant.setImageName(hashedImageName);
+			
+			restaurant.setName(restaurantEditForm.getName());
+			restaurant.setAddress(restaurantEditForm.getAddress());
+			restaurant.setPhoneNumber(restaurantEditForm.getPhoneNumber());
+			restaurant.setDescription(restaurantEditForm.getDescription());
+			restaurant.setBudget(restaurantEditForm.getBudget());
+			restaurant.setOpeningHours(restaurantEditForm.getOpeningHours());
+			restaurant.setCapacity(restaurantEditForm.getCapacity());
+			restaurant.setHoliday(restaurantEditForm.getHoliday());
+			restaurantRepository.save(restaurant);
+		}
+	}
+	
 	public String generateNewFileName(String fileName) {
 		String[] fileNames = fileName.split("\\.");
 		for (int i = 0; i < fileNames.length - 1; i++) {

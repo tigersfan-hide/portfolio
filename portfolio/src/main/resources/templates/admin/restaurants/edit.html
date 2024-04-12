@@ -4,7 +4,7 @@
 		<div th:replace="~{fragment::meta}"></div>
 		
 		<div th:replace="~{fragment::styles}"></div>
-		<title>店舗登録</title>
+		<title>店舗情報編集</title>
 	</head>
 	<body>
 		<div class="nagoyameshi-wrapper">
@@ -16,13 +16,15 @@
 							<nav class="mb-4" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
 								<ol class="breadcrumb">
 									<li class="breadcrumb-item"><a th:href="@{/admin/restaurants}">店舗一覧</a></li>
-									<li class="breadcrumb-item active" aria-current="page">店舗登録
-									</li>
+									<li class="breadcrumb-item"><a th:href="@{/admin/restaurants/__${restaurantEditForm.getId()}__}">店舗詳細</a></li>
+									<li class="breadcrumb-item active" aria-current="page">店舗編集</li>
 								</ol>
 							</nav>
-							<h2 class="mb-4 text-center">店舗登録</h2>
+							<h2 class="mb-4 text-center">店舗編集</h2>
 							
-							<form method="post" th:action="@{/admin/restaurants/create}" th:object="${restaurantRegisterForm}" enctype="multipart/form-data">
+							<form method="post" th:action="@{/admin/restaurants/__${restaurantEditForm.getId()}__/update}" th:object="${restaurantEditForm}" enctype="multipart/form-data">
+								<input type="hidden" th:field="*{id}">
+								
 								<div class="form-group mb-3 row">
 									<div class="col-md-4">
 										<label for="name" class="col-form-label text-md-left fw-bold">店舗名</label>
@@ -30,31 +32,6 @@
 									<div class="col-md-8">
 										<div th:if="${#fields.hasErrors('name')}" class="text-danger small mb-2" th:errors="*{name}"></div>
 										<input type="text" class="form-control" th:field="*{name}" autofocus>
-									</div>
-								</div>
-								
-								<div class="form-group row mb-3">
-									<div class="col-md-4">
-										<label for="category" class="col-form-label text-md-left fw-bold">カテゴリー</label>
-									</div>
-									<div class="col-md-8">
-										<div th:if="${#fields.hasErrors('categoryId')}" class="text-danger small mb-2" th:errors="*{categoryId}"></div>
-										<select type="number" class="form-control" th:field="*{categoryId}">
-											<option selected>選択してください</option>
-											<option value="1">焼肉</option>
-											<option value="2">ラーメン</option>
-											<option value="3">鉄板料理</option>
-											<option value="4">居酒屋</option>
-											<option value="5">イタリアン</option>
-											<option value="6">中華料理</option>
-											<option value="7">日本料理</option>
-											<option value="8">フレンチ</option>
-											<option value="9">韓国料理</option>
-											<option value="10">カフェ</option>
-											<option value="11">鍋料理</option>
-											<option value="12">名古屋名物</option>
-											<option value="13">その他</option>
-										</select>
 									</div>
 								</div>
 								
@@ -68,7 +45,10 @@
 									</div>
 								</div>
 								
-								<div class="row" id="imagePreview"></div>
+								<div th:if="${imageName}" class="row" id="imagePreview">
+									<img th:src="@{/storage/__${imageName}__}" class="mb-3">
+								</div>
+								<div th:unless="${imageName}" class="row" id="imagePreview"></div>
 								
 								<div class="form-group mb-3 row">
 									<div class="col-md-4">
@@ -86,7 +66,7 @@
 									</div>
 									<div class="col-md-8">
 										<div th:if="${#fields.hasErrors('phoneNumber')}" class="text-danger small mb-2" th:errors="*{phoneNumber}"></div>
-										<input type="text" class="form-control" th:field="*{phoneNumber}" >
+										<input type="text" class="form-control" th:field="*{phoneNumber}" autofocus>
 									</div>
 								</div>
 								
@@ -106,7 +86,7 @@
 									</div>
 									<div class="col-md-8">
 										<div th:if="${#fields.hasErrors('budget')}" class="text-danger small mb-2" th:errors="*{budget}"></div>
-										<input type="text" class="form-control" th:field="*{budget}">
+										<input type="text" class="form-control" th:field="*{budget}" autofocus>
 									</div>
 								</div>
 								
@@ -116,7 +96,7 @@
 									</div>
 									<div class="col-md-8">
 										<div th:if="${#fields.hasErrors('openingHours')}" class="text-danger small mb-2" th:errors="*{openingHours}"></div>
-										<input type="text" class="form-control" th:field="*{openingHours}">
+										<input type="text" class="form-control" th:field="*{openingHours}" autofocus>
 									</div>
 								</div>
 								
@@ -126,7 +106,7 @@
 									</div>
 									<div class="col-md-8">
 										<div th:if="${#fields.hasErrors('capacity')}" class="text-danger small mb-2" th:errors="*{capacity}"></div>
-										<input type="number" class="form-control" th:field="*{capacity}">
+										<input type="number" class="form-control" th:field="*{capacity}" autofocus>
 									</div>
 								</div>
 								
@@ -136,11 +116,11 @@
 									</div>
 									<div class="col-md-8">
 										<div th:if="${#fields.hasErrors('holiday')}" class="text-danger small mb-2" th:errors="*{holiday}"></div>
-										<input type="text" class="form-control" th:field="*{holiday}">
+										<input type="text" class="form-control" th:field="*{holiday}" autofocus>
 									</div>
 								</div>
 								<div class="form-group d-flex justify-content-center my-4">
-									<button type="submit" class="btn text-white w-50 nagoyameshi-btn">登録</button>
+									<button type="submit" class="btn text-white w-50 nagoyameshi-btn">更新</button>
 								</div>
 							</form>
 						</div>
@@ -150,6 +130,6 @@
 			<div th:replace="~{fragment::footer}"></div>
 		</div>
 		<div th:replace="~{fragment::scripts}"></div>
-		<script th:src="@{/js/preview.js}"></script> 
+		<script th:src="@{/js/preview.js}"></script>
 	</body>
 </html>
