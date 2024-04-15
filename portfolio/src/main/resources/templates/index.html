@@ -12,6 +12,14 @@
 			<div th:replace="~{fragment::header}"></div>
 			<main>
 				<div class="container pt-4 pb-4 nagoyameshi-container">
+					<div th:if="${param.loggedIn}" class="alert alert-info">
+						ログインしました。
+					</div>  
+					
+					<div th:if="${param.loggedOut}" class="alert alert-info">
+						ログアウトしました。
+						</div>
+						
 					<div class="search-group">
 						<h2 class="mb-3">キーワードから探す</h2>
 						<form>

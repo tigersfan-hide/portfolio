@@ -4,6 +4,15 @@ INSERT IGNORE INTO categorys (id,category) VALUES (2,'ラーメン');
 INSERT IGNORE INTO categorys (id,category) VALUES (3,'鉄板料理');
 INSERT IGNORE INTO categorys (id,category) VALUES (4,'居酒屋');
 INSERT IGNORE INTO categorys (id,category) VALUES (5,'イタリアン');
+INSERT IGNORE INTO categorys (id,category) VALUES (6,'中華料理');
+INSERT IGNORE INTO categorys (id,category) VALUES (7,'日本料理');
+INSERT IGNORE INTO categorys (id,category) VALUES (8,'フレンチ');
+INSERT IGNORE INTO categorys (id,category) VALUES (9,'韓国料理');
+INSERT IGNORE INTO categorys (id,category) VALUES (10,'カフェ');
+INSERT IGNORE INTO categorys (id,category) VALUES (11,'鍋料理');
+INSERT IGNORE INTO categorys (id,category) VALUES (12,'名古屋名物');
+INSERT IGNORE INTO categorys (id,category) VALUES (13,'その他');
+
 -- 店舗table
 INSERT IGNORE INTO restaurants (restaurant_id,category_id,name,image_name,address,phone_number,description,budget,opening_hours,capacity,holiday ) VALUES (1,1,'焼肉　神宮','image_yakiniyu1.jpg','愛知県名古屋市熱田区金山町1-16-16','050-5872-2335','名古屋老舗のお店。老舗の味をご堪能ください。','4,000~5,000','17:00~00:00 L.O. 23:30',46,'火曜日(祝日の場合は営業)');
 INSERT IGNORE INTO restaurants (restaurant_id,category_id,name,image_name,address,phone_number,description,budget,opening_hours,capacity,holiday ) VALUES (2,1,'焼肉　老中','image_yakiniyu2.jpg','愛知県名古屋市西区那古野2-19-23ZERO-NEXT E','050-5868-0811','名古屋老舗のお店。老舗の味をご堪能ください。','10,000~15,000','17:00~23:00',14,'不定休');
@@ -119,3 +128,13 @@ INSERT IGNORE INTO restaurants (restaurant_id,category_id,name,image_name,addres
 '17:00 - 21:00 L.O. 20:00',30,'不定休');
 INSERT IGNORE INTO restaurants (restaurant_id,category_id,name,image_name,address,phone_number,description,budget,opening_hours,capacity,holiday ) VALUES (78,12,'あつた蓬莱軒 本店（蓬莱陣屋）','image_nagoya2.jpg','愛知県名古屋市熱田区神戸町503','050-5596-7539','名古屋老舗のお店。老舗の味をご堪能ください。','5,000~6,000','11:30 - 14:00'
 '16:30 - 20:30',180,'水曜（祝日は営業）と第2・4木曜日');
+
+--役割table
+INSERT IGNORE INTO roles (id, name) VALUES (1, 'ROLE_ADMIN');
+INSERT IGNORE INTO roles (id, name) VALUES (2, 'ROLE_FREE');
+INSERT IGNORE INTO roles (id, name) VALUES (3, 'ROLE_PAID');
+
+--会員table
+INSERT IGNORE INTO users (id, name, furigana, phone_number, email, birthday, password, occupation, role_id, delete_flag) VALUES (1, '侍 太郎', 'サムライ タロウ', '090-1234-5678', 'taro.samurai@example.com', 19971024, 'password1', 1, 1, 1);
+INSERT IGNORE INTO users (id, name, furigana, phone_number, email, birthday, password, occupation, role_id, delete_flag) VALUES (2, '侍 花子', 'サムライ ハナコ', '090-1234-5678', 'hanako.samurai@example.com', 19950504, 'password2', 2, 2, 1);
+INSERT IGNORE INTO users (id, name, furigana, phone_number, email, birthday, password, occupation, role_id, delete_flag) VALUES (3, '侍 義勝', 'サムライ ヨシカツ', '090-1234-5678', 'yoshikatsu.samurai@example.com', 20050312, 'password3', 3, 1, 1);
