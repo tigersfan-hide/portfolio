@@ -18,8 +18,12 @@
 					
 					<div th:if="${param.loggedOut}" class="alert alert-info">
 						ログアウトしました。
-						</div>
-						
+					</div>
+					
+					<div th:if="${successMessage}" class="alert alert-info">
+						<span th:text="${successMessage}"></span>
+					</div>
+					  	
 					<div class="search-group">
 						<h2 class="mb-3">キーワードから探す</h2>
 						<form>

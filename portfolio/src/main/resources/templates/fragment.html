@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	<head>
 		<!-- meta要素の部品化 -->
 		<div th:fragment="meta" th:remove="tag">
@@ -22,29 +22,39 @@
 		<div th:fragment="header" th:remove="tag">
 			<!-- ヘッダー-->
 			<header>
-				<nav class="container nagoyameshi-container">
-					<div class="navbar navbar-light nagoyameshi-navbar">
+				<nav class="navbar navbar-light nagoyameshi-navbar">
+					<div class="container nagoyameshi-container">
 						<a class="navbar-brand" >
 							<img class="nagoyameshi-logo" th:src="@{/images/logo.png}" alt="NAGOYAMESHI">
 						</a>
 						<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasLightNavbar" aria-controls="offcanvasLightNavbar" aria-label="Toggle navigation">
 							<span class="navbar-toggler-icon"></span>
 						</button>
-						<div class="offcanvas offcanvas-end text-bg-light" tabindex="-1" id="offcanvasLightNavbar" aria-labelledby="offcanvasLightNavbarLabel">
+						
+						<div class="offcanvas navbar-offcanvas text-bg-light" tabindex="-1" id="offcanvasLightNavbar" aria-labelledby="offcanvasLightNavbarLabel">
 							<div class="offcanvas-header">
 								<h1 class="offcanvas-title" id="offcanvasLightNavbarLabel">メニュー</h1>
 								<button type="button" class="btn-close btn-close-black" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 							</div>
 						<div class="offcanvas-body">
 							<ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+								<li class="nav-item" sec:authorize="isAnonymous()">
+									<a class="nav-link" th:href="@{/login}">ログイン</a>
+								</li>
+								<li class="nav-item" sec:authorize="isAnonymous()">
+									<a class="nav-link" th:href="@{/signup}">会員登録</a>
+								</li>	
 								<li class="nav-item">
-									<a class="nav-link active" aria-current="page" href="#">ホーム</a>
+									<a class="nav-link" aria-current="page" href="#">ホーム</a>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link" href="#">マイページ</a>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link" href="#">お問い合わせ</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#">ログアウト</a>
 								</li>
 							</ul>
 						</div>

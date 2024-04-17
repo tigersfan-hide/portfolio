@@ -12,7 +12,7 @@ public class RestaurantRegisterForm {
 	@NotBlank(message = "店舗名を入力してください。")
 	private String name;
 	
-	@NotBlank(message = "カテゴリーを選んでください。")
+	@NotNull(message = "カテゴリーを選んでください。")
 	private Byte categoryId;
 	
 	private MultipartFile imageFile;
@@ -26,8 +26,7 @@ public class RestaurantRegisterForm {
 	@NotBlank(message = "説明を入力してください。")
 	private String description;
 	
-	@NotNull(message = "予算を入力してください。")
-	@Min(value = 1, message = "予算は1円以上に設定してください。")
+	@NotBlank(message = "予算を入力してください。")
 	private String budget;
 	
 	@NotBlank(message = "営業時間を入力してください。")

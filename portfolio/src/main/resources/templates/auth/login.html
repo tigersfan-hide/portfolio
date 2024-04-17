@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	<head>
 		<div th:replace="~{fragment::meta}"></div>
 		
@@ -53,7 +53,7 @@
 				</div>
 			</main>
 			<!-- フッター-->
-			<div th:replace="~{fragment::footer}"></divt>
+			<div th:replace="~{fragment::footer}"></div>
 		</div>
 		<div th:replace="~{fragment::scripts}"></div>
 	</body>

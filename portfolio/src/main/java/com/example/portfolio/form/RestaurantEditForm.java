@@ -14,7 +14,7 @@ public class RestaurantEditForm {
 	@NotNull
     private Integer id;
 	
-	@NotNull
+	@NotNull(message = "カテゴリーを選んでください。")
     private Byte categoryId;
 	
 	@NotBlank(message = "店舗名を入力してください。")
@@ -31,8 +31,7 @@ public class RestaurantEditForm {
 	@NotBlank(message = "説明を入力してください。")
 	private String description;
 	
-	@NotNull(message = "予算を入力してください。")
-	@Min(value = 1, message = "予算は1円以上に設定してください。")
+	@NotBlank(message = "予算を入力してください。")
 	private String budget;
 	
 	@NotBlank(message = "営業時間を入力してください。")

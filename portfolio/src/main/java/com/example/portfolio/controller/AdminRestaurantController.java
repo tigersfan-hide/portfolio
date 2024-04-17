@@ -61,7 +61,7 @@ public class AdminRestaurantController {
 	@GetMapping("/register")
 	public String register(Model model) {
 		
-		model.addAttribute("RestaurantRegisterForm", new RestaurantRegisterForm());
+		model.addAttribute("restaurantRegisterForm", new RestaurantRegisterForm());
 		
 		return "admin/restaurants/register";
 	}
