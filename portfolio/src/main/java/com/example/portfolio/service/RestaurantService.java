@@ -45,7 +45,9 @@ public class RestaurantService {
 		restaurant.setOpeningHours(restaurantRegisterForm.getOpeningHours());
 		restaurant.setCapacity(restaurantRegisterForm.getCapacity());
 		restaurant.setHoliday(restaurantRegisterForm.getHoliday());
+		
 		restaurantRepository.save(restaurant);
+		
 	}
 	
 	@Transactional
@@ -59,7 +61,7 @@ public class RestaurantService {
 			Path filePath = Paths.get("src/main/resources/static/storage/" + hashedImageName);
 			copyImageFile(imageFile,filePath);
 			restaurant.setImageName(hashedImageName);
-			
+		}
 			restaurant.setName(restaurantEditForm.getName());
 			restaurant.setAddress(restaurantEditForm.getAddress());
 			restaurant.setPhoneNumber(restaurantEditForm.getPhoneNumber());
@@ -69,22 +71,21 @@ public class RestaurantService {
 			restaurant.setCapacity(restaurantEditForm.getCapacity());
 			restaurant.setHoliday(restaurantEditForm.getHoliday());
 			restaurantRepository.save(restaurant);
-		}
 	}
 	
 	public String generateNewFileName(String fileName) {
 		String[] fileNames = fileName.split("\\.");
 		for (int i = 0; i < fileNames.length - 1; i++) {
-			fileNames[i] = UUID.randomUUID().toString();            
+			fileNames[i] = UUID.randomUUID().toString();
 			}
 		String hashedFileName = String.join(".", fileNames);
 		return hashedFileName;
 		}
-	public void copyImageFile(MultipartFile imageFile, Path filePath) {           
-        try {
-            Files.copy(imageFile.getInputStream(), filePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }          
-    } 
+	public void copyImageFile(MultipartFile imageFile, Path filePath) {
+		try {
+			Files.copy(imageFile.getInputStream(), filePath);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	} 
 }

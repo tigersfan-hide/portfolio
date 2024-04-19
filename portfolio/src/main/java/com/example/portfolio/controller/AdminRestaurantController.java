@@ -75,6 +75,7 @@ public class AdminRestaurantController {
 		redirectAttributes.addFlashAttribute("successMessage", "店舗を登録しました。");
 		return "redirect:/admin/restaurants";
 	}
+	
 	@GetMapping("/{id}/edit")
 	public String edit(@PathVariable(name = "id") Integer id, Model model) {
 		Restaurant restaurant = restaurantRepository.getReferenceById(id);

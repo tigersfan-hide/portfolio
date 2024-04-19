@@ -3,16 +3,9 @@
 	<head>
 		<div th:replace="~{fragment::meta}"></div>
 		
-		<!-- Bootstrap -->
-			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-			<!-- Google Fonts -->
-			<link rel="preconnect" href="https://fonts.googleapis.com">
-			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-			<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
-			
-			<link th:href="@{/css/style.css}" rel="stylesheet">
+		<div th:replace="~{fragment::styles}"></div>
 		
-		<title>ログイン</title>
+		<title>会員登録</title>
 	</head>
 	<body>
 		<div class="nagoyameshi-wrapper">
@@ -35,7 +28,7 @@
 								<!-- 名前　-->
 								<div class="form-group row mb-3">
 									<div class="col-md-5">
-										<label class="text-md-left fw-bold">
+										<label for="name" class="col-form-label text-md-left fw-bold">
 											<div class="d-flex align-items-center">
 												<span class="me-1">名前</span>
 												<span class="badge bg-danger">必須</span>
@@ -50,7 +43,7 @@
 								<!--　フリガナ -->
 								<div class="form-group row mb-3">
 									<div class="col-md-5">
-										<label class="text-md-left fw-bold">
+										<label for="furigana" class="col-form-label text-md-left fw-bold">
 											<div class="d-flex align-items-center">
 												<span class="me-1">フリガナ</span>
 												<span class="badge bg-danger">必須</span>
@@ -59,13 +52,13 @@
 									</div>
 									<div class="col-md-7">
 										<div th:if="${#fields.hasErrors('furigana')}" class="text-danger small mb-2" th:errors="*{furigana}"></div>
-										<input type="text" class="form-control" th:field="*{furigana}" autocomplete="furigana" autofocus placeholder="タナカ　タロウ">
+										<input type="text" class="form-control" th:field="*{furigana}" placeholder="タナカ　タロウ">
 									</div>
 								</div>
 								<!-- 電話番号　-->
 								<div class="form-group row mb-3">
 									<div class="col-md-5">
-										<label class="text-md-left fw-bold">
+										<label for="phoneNumber" class="col-form-label text-md-left fw-bold">
 											<div class="d-flex align-items-center">
 												<span class="me-1">電話番号</span>
 												<span class="badge bg-danger">必須</span>
@@ -74,13 +67,13 @@
 									</div>
 									<div class="col-md-7">
 										<div th:if="${#fields.hasErrors('phoneNumber')}" class="text-danger small mb-2" th:errors="*{phoneNumber}"></div>
-										<input type="text" class="form-control" th:field="*{phoneNumber}" autocomplete="tel-national" autofocus placeholder="080-1234-5678">
+										<input type="text" class="form-control" th:field="*{phoneNumber}" autocomplete="tel-national" placeholder="080-1234-5678">
 									</div>
 								</div>
 								<!-- メールアドレス　-->
 								<div class="form-group row mb-3">
 									<div class="col-md-5">
-										<label class="text-md-left fw-bold">
+										<label for="email" class="col-form-label text-md-left fw-bold">
 											<div class="d-flex align-items-center">
 												<span class="me-1">メールアドレス</span>
 												<span class="badge bg-danger">必須</span>
@@ -89,13 +82,13 @@
 									</div>
 									<div class="col-md-7">
 										<div th:if="${#fields.hasErrors('email')}" class="text-danger small mb-2" th:errors="*{email}"></div>
-										<input type="text" class="form-control" th:field="*{email}" autocomplete="email" autofocus placeholder="taro.samurai@example.com">
+										<input type="text" class="form-control" th:field="*{email}" autocomplete="email" placeholder="taro.samurai@example.com">
 									</div>
 								</div>
 								<!-- 生年月日　-->
 								<div class="form-group row mb-3">
 									<div class="col-md-5">
-										<label class="text-md-left fw-bold">
+										<label for="birthday" class="col-form-label text-md-left fw-bold">
 											<div class="d-flex align-items-center">
 												<span class="me-1">生年月日</span>
 												<span class="badge bg-danger">必須</span>
@@ -104,13 +97,13 @@
 									</div>
 									<div class="col-md-7">
 										<div th:if="${#fields.hasErrors('birthday')}" class="text-danger small mb-2" th:errors="*{birthday}"></div>
-										<input type="text" class="form-control" th:field="*{birthday}" autocomplete="birthday" autofocus placeholder="20010123">
+										<input type="text" class="form-control" th:field="*{birthday}" placeholder="20010123">
 									</div>
 								</div>
 								<!-- 職業-->
 								<div class="form-group row mb-3">
 									<div class="col-md-5">
-										<label class="text-md-left fw-bold">
+										<label for="occupation" class="col-form-label text-md-left fw-bold">
 											<div class="d-flex align-items-center">
 												<span class="me-1">職業</span>
 												<span class="badge bg-danger">必須</span>
@@ -119,7 +112,7 @@
 									</div>
 									<div class="col-md-7">
 										<div th:if="${#fields.hasErrors('occupation')}" class="text-danger small mb-2" th:errors="*{occupation}"></div>
-										<select class="form-select" aria-label="Default select example" th:field="*{occupation}" autocomplete="occupation">
+										<select class="form-select" aria-label="Default select example" th:field="*{occupation}">
 											<option value="">選択してください</option>
 											<option value="1">公務員</option>
 											<option value="2">経営者・役員</option>
@@ -136,7 +129,7 @@
 								<!-- パスワード-->
 								<div class="form-group row mb-3">
 									<div class="col-md-5">
-										<label class="text-md-left fw-bold">
+										<label  for="password" class="col-form-label text-md-left fw-bold">
 											<div class="d-flex align-items-center">
 												<span class="me-1">パスワード</span>
 												<span class="badge bg-danger">必須</span>
@@ -151,9 +144,9 @@
 								<!-- パスワード確認用-->
 								<div class="form-group row mb-3">
 									<div class="col-md-5">
-										<label class="text-md-left fw-bold">
+										<label for="passwordConfirmation" class="col-form-label text-md-left fw-bold">
 											<div class="d-flex align-items-center">
-												<span class="me-1">パスワード確認用</span>
+												<span class="me-1">パスワード(確認用)</span>
 												<span class="badge bg-danger">必須</span>
 											</div>
 										</label>
@@ -173,6 +166,6 @@
 			</main>
 			<div th:replace="~{fragment::footer}"></div>
 		</div>
-		<div th:replace="~{fragment::script}"></div>
+		<div th:replace="~{fragment::scripts}"></div>
 	</body>
 </html>
