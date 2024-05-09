@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS users (
 	phone_number VARCHAR(15) NOT NULL,
 	email VARCHAR(255) NOT NULL UNIQUE,
 	birthday INT NOT NULL,
-	password VARCHAR(25) NOT NULL,
+	password VARCHAR(70) NOT NULL,
 	occupation TINYINT NOT NULL,
 	role_id TINYINT NOT NULL, 
 	delete_flag TINYINT NOT NULL,

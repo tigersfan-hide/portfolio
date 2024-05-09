@@ -72,7 +72,7 @@ public class AdminRestaurantController {
 			return "admin/restaurants/register";
 		}
 		restaurantService.create(restaurantRegisterForm);
-		redirectAttributes.addFlashAttribute("successMessage", "店舗を登録しました。");
+		redirectAttributes.addFlashAttribute("successMessage", "店舗情報を登録しました。");
 		return "redirect:/admin/restaurants";
 	}
 	
@@ -93,7 +93,7 @@ public class AdminRestaurantController {
 			return "admin/restaurants/edit";
 		}
 		restaurantService.update(restaurantEditForm);
-		redirectAttributes.addFlashAttribute("successMessage", "店舗を登録しました。");
+		redirectAttributes.addFlashAttribute("successMessage", "店舗情報を更新しました。");
 		return "redirect:/admin/restaurants";
 	}
 	

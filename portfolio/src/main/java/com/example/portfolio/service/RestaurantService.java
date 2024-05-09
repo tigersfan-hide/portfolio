@@ -63,6 +63,7 @@ public class RestaurantService {
 			restaurant.setImageName(hashedImageName);
 		}
 			restaurant.setName(restaurantEditForm.getName());
+			restaurant.setCategoryId(restaurantEditForm.getCategoryId());
 			restaurant.setAddress(restaurantEditForm.getAddress());
 			restaurant.setPhoneNumber(restaurantEditForm.getPhoneNumber());
 			restaurant.setDescription(restaurantEditForm.getDescription());
@@ -70,6 +71,7 @@ public class RestaurantService {
 			restaurant.setOpeningHours(restaurantEditForm.getOpeningHours());
 			restaurant.setCapacity(restaurantEditForm.getCapacity());
 			restaurant.setHoliday(restaurantEditForm.getHoliday());
+			
 			restaurantRepository.save(restaurant);
 	}
 	

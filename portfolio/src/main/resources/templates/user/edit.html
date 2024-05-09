@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	<head>
-		<div th:replace="~{fragmenat :: meta}"></div>
+		<div th:replace="~{fragment :: meta}"></div>
 		
-		<div th:replace="~{fragmenat :: styles}"></div>
+		<div th:replace="~{fragment :: styles}"></div>
 		
 		<title>個人情報編集</title>
 	</head>
 	<body>
 		<div class="samuraitravel-wrapper">
-			<div th:replace="~{fragmenat :: header}"></div>
+			<div th:replace="~{fragment :: header}"></div>
 			<main>
 				<div class="row justify-content-center">
 					<div class="col-xl-5 col-lg-6 col-md-8">
 						<nav class="my-3" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-							<ol>
-								<li class="breadcrumb-item"><a th:herf="@{/}">ホーム</a></li>
-								<li class="breadcrumb-item"><a th:herf="@{/user}">個人情報詳細</a></li>
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a th:href="@{/user}">個人情報詳細</a></li>
 								<li class="breadcrumb-item active" aria-current="page">個人情報編集</li>
 							</ol>
 						</nav>
@@ -133,8 +132,8 @@
 					</div>
 				</div>
 			</main>
-			<div th:replace="~{fragmenat :: footer}"></div>
+			<div th:replace="~{fragment :: footer}"></div>
 		</div>
-		<div th:replace="~{fragmenat :: scripts}"></div>
+		<div th:replace="~{fragment :: scripts}"></div>
 	</body>
 </html>

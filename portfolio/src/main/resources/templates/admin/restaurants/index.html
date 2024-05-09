@@ -15,9 +15,9 @@
 						<div class="col-xxl-9 col-xl-10 col-lg-11">
 							<h2 class="mb-4 text-center">店舗一覧</h2>
 							<div class="d-flex justify-content-between align-items-end flex-wrap">
-								<form class="method="get" th:action="@{/admin/restaurants}" mb-3">
-									<div class="input-group">
-										<input type="text" class="form-control mb-3" name="keyword" th:value="${keyword}" placeholder="店舗名">
+								<form class="mb-3"method="get" th:action="@{/admin/restaurants}">
+									<div class="input-group mb-3">
+										<input type="text" class="form-control" name="keyword" th:value="${keyword}" placeholder="店舗名">
 										<button type="submit" class="btn text-white nagoyameshi-btn">検索</button>
 									</div>
 								</form>
