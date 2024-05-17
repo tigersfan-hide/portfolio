@@ -1,41 +1,46 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	<head>
-		<div th:replace="~{fragment::meta}"></div>
+		<div th:replace="~{fragment :: meta}"></div>
 		
-		<div th:replace="~{fragment::styles}"></div>
-		<title>店舗詳細</title>
+		<div th:replace="~{fragment :: styles}"></div>
+		
+		<title>店舗情報詳細</title>
 	</head>
 	<body>
 		<div class="nagoyameshi-wrapper">
-			<div th:replace="~{fragment::header}"></div>
+			<div th:replace="~{fragment :: header}"></div>
 			<main>
 				<div class="container pt-4 pb-5 nagoyameshi-container">
 					<div class="row justify-content-center">
 						<div class="col-xl-5 col-lg-6 col-md-8">
 							<nav class="mb-4" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
 								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a th:href="@{/admin/restaurants}">店舗一覧</a></li>
-									<li class="breadcrumb-item active" aria-current="page">店舗詳細</li>
+									<li class="breadcrumb-item"><a th:href="@{/}">トップページ</a></li>
+									<li class="breadcrumb-item active" aria-current="page">店舗情報詳細</li>
 								</ol>
 							</nav>
+							
 							<h2 class="mb-4 text-center" th:text="${restaurant.getName()}"></h2>
+							
 							<div class="d-flex justify-content-end align-items-end mb-3">
 								<div>
-									<a th:href="@{/admin/restaurants/__${restaurant.getId()}__/edit}">編集</a>
+									<a th:href="@{/}">予約</a>
 								</div>
 							</div>
+							
 							<div class="mb-3">
 								<img th:if="${restaurant.getImageName()}" th:src="@{/storage/__${restaurant.getImageName()}__}" class="w-100" alt="民宿画像">
 								<img th:unless="${restaurant.getImageName()}" th:src="@{/images/noImage.png}" class="w-100" alt="NO IMAGE">
 							</div>
+							
 							<div class="container mb-4">
 								<div class="row pb-2 mb-2 border-bottom">
 									<div class="col-4">
 										<span class="fw-bold">カテゴリー</span>
 									</div>
 									<div class="col">
-										<span th:text="${restaurant.getCategoryId()}"></span>
+										<span th:text="${restaurant.getCategory()}"></span>
 									</div>
 								</div>
 								
@@ -115,8 +120,8 @@
 					</div>
 				</div>
 			</main>
-			<div th:replace="~{fragment::footer}"></div>
+			<div th:replace="~{fragment :: footer}"></div>
 		</div>
-		<div th:replace="~{fragment::scripts}"></div>
+		<div th:replace="~{fragment :: scripts}"></div>
 	</body>
 </html>

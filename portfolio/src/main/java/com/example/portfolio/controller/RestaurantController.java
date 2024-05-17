@@ -14,7 +14,7 @@ import com.example.portfolio.entity.Restaurant;
 import com.example.portfolio.repository.RestaurantRepository;
 
 @Controller
-@RequestMapping("/restaurants")
+@RequestMapping("/restaurant")
 public class RestaurantController {
 	private final RestaurantRepository restaurantRepository;
 	
@@ -23,7 +23,7 @@ public class RestaurantController {
 	}
 	@GetMapping
 	public String index(@RequestParam(name = "keyword", required = false) String keyword,
-						@RequestParam(name = "category", required = false) String category,
+						@RequestParam(name = "categoryId", required = false) Byte categoryId,
 						@PageableDefault(page = 0, size =10, sort = "id", direction = Direction.ASC) Pageable pageable,
 						Model model
 						) 
@@ -32,15 +32,15 @@ public class RestaurantController {
 		
 		if(keyword != null && !keyword.isEmpty()) {
 			restaurantPage = restaurantRepository.findByNameLikeAndAddressLike("%" + keyword + "%", "%" + keyword + "%", pageable);
-		} else if(category != null && !category.isEmpty()) {
-			restaurantPage = restaurantRepository.findByCategoryLike("%" + category + "%", pageable);
+		} else if(categoryId != null) {
+		restaurantPage = restaurantRepository.findByCategoryId(categoryId, pageable);
 		} else {
 			restaurantPage = restaurantRepository.findAll(pageable);
 		}
 		
 		model.addAttribute("restaurantPage", restaurantPage);
 		model.addAttribute("keyword", keyword);
-		model.addAttribute("category", category);
+		model.addAttribute("category", categoryId);
 		
 		return "restaurants/index";
 	}

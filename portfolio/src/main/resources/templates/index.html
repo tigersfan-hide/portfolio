@@ -4,7 +4,7 @@
 		<div th:replace="~{fragment::meta}"></div>
 		<div th:replace="~{fragment::styles}"></div>
 		
-		<title>ログイン</title>
+		<title>トップページ</title>
 	</head>
 	<body>
 		<!-- ヘッダー-->
@@ -23,19 +23,73 @@
 					<div th:if="${successMessage}" class="alert alert-info">
 						<span th:text="${successMessage}"></span>
 					</div>
-					  	
-					<div class="search-group">
-						<h2 class="mb-3">キーワードから探す</h2>
+					
+					<div class="d-flex justify-content-center">
 						<form>
-							<div class="input-group">
-								<input type="text" class="form-control" placeholder="店舗名・エリア・カテゴリ" name="keyword">
+							<div class="input-group mb-3">
+								<input type="text" class="form-control" placeholder="店舗名・エリア" name="keyword">
 								<button type="submit" class="btn btn-primary text-white">検索</button> 
 							</div>
 						</form>
 					</div>
-					<div class="categoty-group">
-						<h2 class="mb-3">カテゴリーから探す</h2>
-						
+					<div class="categoty-group mb-3">
+						<h2 class="mb-3 text-center">カテゴリーから探す</h2>
+						<form>
+							<div class="form-group row mb-3">
+								<select type="number" class="form-control">
+									<option selected value="">カテゴリー</option>
+									<option value="1">焼肉</option>
+									<option value="2">ラーメン</option>
+									<option value="3">鉄板料理</option>
+									<option value="4">居酒屋</option>
+									<option value="5">イタリアン</option>
+									<option value="6">中華料理</option>
+									<option value="7">日本料理</option>
+									<option value="8">フレンチ</option>
+									<option value="9">韓国料理</option>
+									<option value="10">カフェ</option>
+									<option value="11">鍋料理</option>
+									<option value="12">名古屋名物</option>
+									<option value="13">その他</option>
+								</select>
+							</div>
+						</form>
+					</div>
+					
+					<h2 class="mb-3 text-center">店舗一覧</h2>
+					<div class="row row-cols-lg-5 row-cols-2 g-3 mb-5">
+						<div class="col" th:each=" restaurantPage : ${restaurantPage}">
+							<a th:href="@{/restaurant/__${restaurantPage.getId()}__}" class="link-dark nagoyameshi-card-link">
+								<div class="card h-100">
+									<img th:if="${restaurantPage.getImageName()}" th:src="@{/storage/__${restaurantPage.getImageName()}__}" class="card-img-top nagoyameshi-vertical-card-image" height="125" alt="店舗画像">
+									<img th:unless="${restaurantPage.getImageName()}" th:src="@{/images/noImage.png}" class="card-img-top nagoyameshi-vertical-card-image" alt="NO IMAGE">
+									<div class="card-body">
+										<h3 class="card-title" th:text="${restaurantPage.getName()}"></h3>
+										<p class="card-text mb-1" th:text="${restaurantPage.getAddress()}"></p>
+										<p class="card-text mb-1" th:text="${restaurantPage.getPhoneNumber()}"></p>
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
+					
+					<div th:if="${restaurantPage.getTotalPages() >1}" class="d-flex justify-content-center">
+						<nav aria-label="店舗一覧ページ">
+							<ul class="pagination">
+								<li class="page-item">
+									<span th:if="${restaurantPage.isFirst()}" class="page-link disabled">前</span>
+									<a th:unless="${restaurantPage.isFirst()}" th:href="@{/(page = ${restaurantPage.getNumber() - 1}, keyword = ${keyword})}" class="page-link nagoyameshi-page-link">前</a>
+								</li>
+								<li th:each="i : ${#numbers.sequence(0, restaurantPage.getTotalPages() - 1)}" class="page-item">
+									<span th:if="${i == restaurantPage.getNumber()}" class="page-link active nagoyameshi-active" th:text="${i + 1}"></span>
+									<a th:unless="${i == restaurantPage.getNumber()}" th:href="@{/(page = ${i}, keyword = ${keyword})}" class="page-link nagoyameshi-page-link" th:text="${i + 1}"></a>
+								</li>
+								<li class="page-item">
+									<span th:if="${restaurantPage.isLast()}" class="page-link disabled">次</span>
+									<a th:unless="${restaurantPage.isLast()}" th:href="@{/(page = ${restaurantPage.getNumber() + 1}, keyword = ${keyword})}" class="page-link nagoyameshi-page-link">次</a>
+								</li>
+							</ul>
+						</nav>
 					</div>
 				</div>
 			</main>
