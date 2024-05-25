@@ -138,3 +138,6 @@ INSERT IGNORE INTO roles (id, name) VALUES (3, 'ROLE_PAID');
 INSERT IGNORE INTO users (id, name, furigana, phone_number, email, birthday, password, occupation, role_id, delete_flag) VALUES (1, '侍 太郎', 'サムライ タロウ', '090-1234-5678', 'taro.samurai@example.com', 19971024, '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 1, 1, 1);
 INSERT IGNORE INTO users (id, name, furigana, phone_number, email, birthday, password, occupation, role_id, delete_flag) VALUES (2, '侍 花子', 'サムライ ハナコ', '090-1234-5678', 'hanako.samurai@example.com', 19950504, '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 2, 2, 1);
 INSERT IGNORE INTO users (id, name, furigana, phone_number, email, birthday, password, occupation, role_id, delete_flag) VALUES (3, '侍 義勝', 'サムライ ヨシカツ', '090-1234-5678', 'yoshikatsu.samurai@example.com', 20050312, 'password3', 3, 1, 1);
+
+--予約table
+INSERT IGNORE INTO reservations (id, user_id, restaurant_id, visiting_time, number_of_people) VALUES (1, 2, 3, '2024-06-10  19:00', 4);

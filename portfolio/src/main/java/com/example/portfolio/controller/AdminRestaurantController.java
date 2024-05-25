@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.portfolio.entity.Restaurant;
+import com.example.portfolio.entity.Transformation;
 import com.example.portfolio.form.RestaurantEditForm;
 import com.example.portfolio.form.RestaurantRegisterForm;
 import com.example.portfolio.repository.RestaurantRepository;
+import com.example.portfolio.service.CategoryService;
 import com.example.portfolio.service.RestaurantService;
 
 @Controller
@@ -27,10 +29,12 @@ import com.example.portfolio.service.RestaurantService;
 public class AdminRestaurantController {
 	private final RestaurantRepository restaurantRepository;
 	private final RestaurantService restaurantService;
+	private final CategoryService categoryService;
 	
-	public AdminRestaurantController(RestaurantRepository restaurantRepository, RestaurantService restaurantService) {
+	public AdminRestaurantController(RestaurantRepository restaurantRepository, RestaurantService restaurantService, CategoryService categoryService) {
 		this.restaurantRepository = restaurantRepository;
 		this.restaurantService = restaurantService;
+		this.categoryService = categoryService;
 	}
 	
 	@GetMapping
@@ -51,9 +55,9 @@ public class AdminRestaurantController {
 	
 	@GetMapping("/{id}")
 	public String show(@PathVariable(name = "id") Integer id, Model model){
-		Restaurant restaurant = restaurantRepository.getReferenceById(id);
+		Transformation transformation = categoryService.getList(id);
 		
-		model.addAttribute("restaurant", restaurant);
+		model.addAttribute("restaurant", transformation);
 		
 		return "admin/restaurants/show";
 	}
@@ -69,7 +73,7 @@ public class AdminRestaurantController {
 	@PostMapping("/create")
 	public String create(@ModelAttribute @Validated RestaurantRegisterForm restaurantRegisterForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		if(bindingResult.hasErrors()) {
-			return "admin/restaurants/register";
+			return "admin/restaurants/create";
 		}
 		restaurantService.create(restaurantRegisterForm);
 		redirectAttributes.addFlashAttribute("successMessage", "店舗情報を登録しました。");
