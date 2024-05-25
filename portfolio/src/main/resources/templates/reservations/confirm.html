@@ -25,7 +25,7 @@
 							
 							<h2 class="mb-4 text-center">予約情報確認</h2>
 							
-							<form method="get" th:action="@{/restaurant/__${reservationRegisterForm.getRestaurantId()}__/reservations/create}" th:object="${reservationRegisterForm}">
+							<form method="post" th:action="@{/restaurant/__${reservationRegisterForm.getRestaurantId()}__/reservations/create}" th:object="${reservationRegisterForm}">
 								<input type="hidden" th:field="*{restaurantId}">
 								<input type="hidden" th:field="*{userId}">
 								<input type="hidden" th:field="*{visitingTime}">
