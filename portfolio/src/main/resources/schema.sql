@@ -51,3 +51,15 @@ CREATE TABLE IF NOT EXISTS users (
 	FOREIGN KEY (user_id) REFERENCES users (id),
 	FOREIGN KEY (restaurant_id) REFERENCES restaurants (restaurant_id)
  );
+ 
+ CREATE TABLE IF NOT EXISTS reviews(
+ 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+ 	user_id MEDIUMINT NOT NULL,
+	restaurant_id MEDIUMINT NOT NULL,
+	review_score TINYINT NOT NULL,
+	review VARCHAR(500) NOT NULL,
+	created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	FOREIGN KEY (user_id) REFERENCES users (id),
+	FOREIGN KEY (restaurant_id) REFERENCES restaurants (restaurant_id)
+ );

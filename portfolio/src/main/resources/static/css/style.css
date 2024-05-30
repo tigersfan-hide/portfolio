@@ -45,7 +45,7 @@ footer{
 }
 
 h2 {
-   font-size: 1.5rem;
+	font-size: 1.5rem;
 }
 
 .nagoyameshi-btn {
@@ -58,38 +58,61 @@ h2 {
 }
 
 .nagoyameshi-page-link {
-   color: #5196a6;
+	color: #5196a6;
 }
  
 .nagoyameshi-page-link:hover {
-   color: #407784;
+	color: #407784;
 }
  
 .nagoyameshi-active {
-   background-color: #5196a6 !important;
-   border-color: #5196a6 !important;
+	background-color: #5196a6 !important;
+	border-color: #5196a6 !important;
 }
 
 .nagoyameshi-pre-wrap {
-   white-space: pre-wrap;
+	white-space: pre-wrap;
 }
 
 .nagoyameshi-link-danger {
-     color: #f2594b;
+	color: #f2594b;
  }
  
 .nagoyameshi-link-danger:hover {
-     color: #a63c3c;
+	color: #a63c3c;
  }
  
 .nagoyameshi-btn-danger {
-     background-color: #f2594b !important;
-     transition: 0.1s;
+	background-color: #f2594b !important;
+	transition: 0.1s;
  }
  
  .nagoyameshi-btn-danger:hover {
-   opacity: 0.8;   
+	opacity: 0.8;   
  }
+
+.stars span{
+	display: flex;
+	flex-direction: row-reverse;
+	justify-content: flex-end;
+}
+
+.stars input[type='radio']{
+	display: none;
+}
+
+.stars label{
+	color: #D2D2D2;
+	font-size: 30px;
+	padding: 0 5px;
+	cursor: pointer;
+}
+
+.stars label:hover,
+.stars label:hover ~ label,
+.stars input[type='radio']:checked ~ label{
+	color: #F8C601;
+}
 
 @media screen and (min-width: 1400px) {
    .nagoyameshi-container {

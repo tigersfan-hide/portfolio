@@ -23,10 +23,10 @@
 							
 							<h2 class="mb-4 text-center" th:text="${restaurant.getName()}"></h2>
 							
-							<div class="d-flex justify-content-end align-items-end mb-3">
-								<div>
-									<a th:href="@{/restaurant/__${restaurant.getId()}__/reservations}">予約</a>
-								</div>
+							<div class="d-flex justify-content-between align-items-end mb-3">
+								<a th:href="@{/restaurant/__${restaurant.getId()}__/reviews}">レビューを投稿</a>
+								
+								<a th:href="@{/restaurant/__${restaurant.getId()}__/reservations}">予約</a>
 							</div>
 							
 							<div class="mb-3">

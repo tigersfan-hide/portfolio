@@ -5,5 +5,6 @@ flatpickr('#visitingTime',{
 	enableTime: true,
 	locale : 'ja',
 	minDate : 'today',
-	maxDate : maxDate
+	maxDate : maxDate,
+	format : 'yyyy/MM/dd HH:mm:ss'
 });
