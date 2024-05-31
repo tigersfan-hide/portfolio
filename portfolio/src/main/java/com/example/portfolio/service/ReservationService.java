@@ -30,7 +30,8 @@ public class ReservationService {
 		Reservation reservation = new Reservation();
 		Restaurant restaurant = restaurantRepository.getReferenceById(reservationRegisterForm.getRestaurantId());
 		User user = userRepository.getReferenceById(reservationRegisterForm.getUserId());
-		LocalDateTime visitngTime = LocalDateTime.parse(reservationRegisterForm.getVisitingTime());
+		String dateTime = reservationRegisterForm.getVisitingTime();
+		LocalDateTime visitngTime = LocalDateTime.parse(dateTime.substring(0, 10) + "T" + dateTime.subSequence(11, 16) + ":00.00");
 		
 		reservation.setRestaurant(restaurant);
 		reservation.setUser(user);

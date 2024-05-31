@@ -26,5 +26,5 @@ public class HomeController {
 		model.addAttribute("restaurantPage", restaurantPage);
 		
 		return "index";
-	}	
+	}
 }

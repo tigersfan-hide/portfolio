@@ -65,7 +65,6 @@ public class ReviewController {
 			return "reviews/review";
 		}
 		
-		
 		reviewService.create(reviewRegisterForm);
 		
 		redirectAttributes.addFlashAttribute("successMessage", "レビューを投稿しました。");

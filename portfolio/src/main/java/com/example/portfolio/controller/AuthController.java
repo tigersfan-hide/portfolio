@@ -47,6 +47,10 @@ public class AuthController {
 		if(bindingResult.hasErrors()) {
 			return "auth/signup";
 		}
+		
+		userService.create(signupForm);
+		redirectAttributes.addFlashAttribute("successMessage", "会員登録が完了しました。");
+		
 		return "redirect:/";
 	}
 	
