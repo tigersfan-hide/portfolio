@@ -7,6 +7,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.portfolio.entity.Restaurant;
 import com.example.portfolio.repository.RestaurantRepository;
@@ -20,8 +21,20 @@ public class HomeController {
 	}
 
 	@GetMapping("/")
-	public String index(Model model, @PageableDefault(page=0, size=10, sort="id", direction=Direction.ASC)Pageable pageable) {
-		Page<Restaurant> restaurantPage = restaurantRepository.findAll(pageable);
+	public String index(Model model, 
+						@PageableDefault(page=0, size=10, sort="id", direction=Direction.ASC)Pageable pageable, 
+						@RequestParam(name = "keyword", required = false) String keyword, 
+						@RequestParam(name = "categoryId", required = false)Byte categoryId) {
+		
+		Page<Restaurant> restaurantPage;
+		
+		if(keyword != null && !keyword.isEmpty()) {
+			restaurantPage = restaurantRepository.findByNameLikeAndAddressLike("%" + keyword + "%", "%" + keyword + "%", pageable);
+		}else if(categoryId != null){
+			restaurantPage = restaurantRepository.findByCategoryId(categoryId, pageable);
+		}else {
+			restaurantPage = restaurantRepository.findAll(pageable);
+		}
 		
 		model.addAttribute("restaurantPage", restaurantPage);
 		

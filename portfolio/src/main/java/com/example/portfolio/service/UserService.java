@@ -26,7 +26,9 @@ public class UserService {
 	@Transactional
 	public User create(SignupForm signupForm) {
 		User user = new User();
-		Role role = roleRepository.findByName("ROLE_FREE");
+		
+		Role role = roleRepository.findByName(signupForm.getRole());
+		
 		
 		user.setName(signupForm.getName());
 		user.setFurigana(signupForm.getFurigana());

@@ -27,13 +27,16 @@ a:hover{
 footer{
 	height: 60px;
 	bottom: 0;
-	background-color: #f2f0eb
+	background-color: #f2f0eb;
+	position: absolute;
+	width: 100%;
 }
 
 .nagoyameshi-wrapper{
 	min-height: 100vh;
 	padding-bottom: 60px;
 	box-sizing: border-box;
+	position: relative;
 }
 
 .nagoyameshi-navbar {

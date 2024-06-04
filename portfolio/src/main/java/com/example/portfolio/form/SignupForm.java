@@ -27,12 +27,14 @@ public class SignupForm {
 	@Length(min = 8, max = 25, message = "パスワードは8文字以上25文字以内で入力してください。")
 	private String password;
 	
-//	@NotNull(message = "会員種類を選択してください。")
-//	private Byte roleId;
+	@NotNull(message = "会員種類を選択してください。")
+	private String role;
 	
 	@NotNull(message = "職業を選択してください。")
 	private Byte occupation;
 	
 	@NotBlank(message = "パスワード(確認用)を入力してください。")
 	private String passwordConfirmation;
+	
+	short price = 500;
 }

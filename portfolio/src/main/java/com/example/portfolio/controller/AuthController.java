@@ -11,14 +11,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.portfolio.form.SignupForm;
+import com.example.portfolio.service.StripeService;
 import com.example.portfolio.service.UserService;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class AuthController {
-	private final UserService userService; 
+	private final UserService userService;
+	private final StripeService stripeService;
 	
-	public AuthController(UserService userService) {
+	public AuthController(UserService userService, StripeService stripeService) {
 		this.userService = userService;
+		this.stripeService = stripeService;
 	}
 	
 	@GetMapping("/login")
@@ -33,25 +38,35 @@ public class AuthController {
 	}
 	
 	@PostMapping("/signup")
-	public String signup(@ModelAttribute @Validated SignupForm signupForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-		if(userService.isEmailRegistered(signupForm.getEmail())) {
-			FieldError fieldError = new FieldError(bindingResult.getObjectName(), "email", "すでに登録済みのメールアドレスです。");
-            bindingResult.addError(fieldError); 
+	public String signup(@ModelAttribute @Validated SignupForm signupForm,
+						BindingResult bindingResult,
+						RedirectAttributes redirectAttributes,
+						HttpServletRequest httpServletRequest,
+						Model model
+						) {
+		if(signupForm.getRole().equals("ROLE_PAID")) {
+			String sessionId = stripeService.createStripeSession(signupForm, httpServletRequest);
+			
+			return "";
+		}else{
+			if(userService.isEmailRegistered(signupForm.getEmail())) {
+				FieldError fieldError = new FieldError(bindingResult.getObjectName(), "email", "すでに登録済みのメールアドレスです。");
+				bindingResult.addError(fieldError); 
+			}
+			
+			if(!userService.isSamePassword(signupForm.getPassword(), signupForm.getPasswordConfirmation())) {
+				FieldError fieldError = new FieldError(bindingResult.getObjectName(), "password", "パスワードが一致しません。");
+				bindingResult.addError(fieldError);
+			}
+			
+			if(bindingResult.hasErrors()) {
+				return "auth/signup";
+			}
+			
+				userService.create(signupForm);
+				redirectAttributes.addFlashAttribute("successMessage", "会員登録が完了しました。");
+			
+			return "redirect:/";
 		}
-		
-		if(!userService.isSamePassword(signupForm.getPassword(), signupForm.getPasswordConfirmation())) {
-			FieldError fieldError = new FieldError(bindingResult.getObjectName(), "password", "パスワードが一致しません。");
-			bindingResult.addError(fieldError);
-		}
-		
-		if(bindingResult.hasErrors()) {
-			return "auth/signup";
-		}
-		
-		userService.create(signupForm);
-		redirectAttributes.addFlashAttribute("successMessage", "会員登録が完了しました。");
-		
-		return "redirect:/";
 	}
-	
 }
