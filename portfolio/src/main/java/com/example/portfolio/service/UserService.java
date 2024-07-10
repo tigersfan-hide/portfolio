@@ -57,6 +57,15 @@ public class UserService {
 		userRepository.save(user);
 	}
 	
+	@Transactional
+	public void withdrawal(UserEditForm userEditForm) {
+		User user = userRepository.getReferenceById(userEditForm.getId());
+		
+		user.setDeleteFlag((byte) 0);
+		
+		userRepository.save(user);
+	}
+	
 	 public boolean isEmailRegistered(String email) {
 		 User user = userRepository.findByEmail(email);  
 		 return user != null;

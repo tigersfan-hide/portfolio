@@ -34,16 +34,18 @@ public class SalesManagementService {
 		return SalesByPeriod;
 	}
 	
-	public int[] getSalesByAge(int[] age) {
+	public int[] getSalesByAge(int[] ageList) {
 		List<User> users = userRepository.findAll();
 		
-		int[] SalesByAgeList = null;
+		int[] SalesByAgeList = new int[ageList.length];
 		
-		for(int i = 0; i < age.length; i++) {
+		for(int i = 0; i < ageList.length; i++) {
+			int age = ageList[i];
+			
 			List<User> userByAgeList = users.stream()
 					.filter(user -> {
 						int userAge = getUserAge(user.getBirthday());
-						age[i] <= userAge && userAge <= age[i] + 9 && user.getRole().getId() == 3;
+						return generationalDivision(age, userAge) && user.getRole().getId() == 3;
 					})
 					.collect(Collectors.toList());
 			
@@ -53,14 +55,20 @@ public class SalesManagementService {
 		return SalesByAgeList;
 	}
 	
-	public int getSalesByOccupation(Byte occupation) {
+	public int[] getSalesByOccupation(int[] occupationList) {
 		List<User> users = userRepository.findAll();
 		
-		List<User> userByOccupationList = users.stream()
-				.filter(user -> user.getOccupation() == occupation && user.getRole().getId() == 3)
-				.collect(Collectors.toList());
+		int[] SalesByOccupation = new int[occupationList.length];
 		
-		int SalesByOccupation = price * userByOccupationList.size();
+		for(int i = 0; i < occupationList.length; i++) {
+			int occupation = occupationList[i];
+			
+			List<User> userByOccupationList = users.stream()
+					.filter(user -> user.getOccupation() == occupation && user.getRole().getId() == 3)
+					.collect(Collectors.toList());
+			
+			SalesByOccupation[i] = price * userByOccupationList.size();
+		}
 		
 		return SalesByOccupation;
 	}
@@ -74,28 +82,44 @@ public class SalesManagementService {
 		try {
 			userBirthday = sdf.parse(stringBirthday.substring(0, 4) + "/" + stringBirthday.substring(4, 6) + "/" + stringBirthday.substring(6, 8));
 		
-		Date now = new Date();
+			Date now = new Date();
 		
-		Calendar calendarBirth = Calendar.getInstance();
-		Calendar calendarNow = Calendar.getInstance();
+			Calendar calendarBirth = Calendar.getInstance();
+			Calendar calendarNow = Calendar.getInstance();
 		
-		calendarBirth.setTime(userBirthday);
-		calendarNow.setTime(now);
+			calendarBirth.setTime(userBirthday);
+			calendarNow.setTime(now);
 		
-		int age = calendarNow.get(Calendar.YEAR) - calendarBirth.get(Calendar.YEAR);
+			int age = calendarNow.get(Calendar.YEAR) - calendarBirth.get(Calendar.YEAR);
 		
-		if(calendarNow.get(Calendar.MONTH) < calendarBirth.get(Calendar.MONTH)) {
-			age -= 1;
-		}else if (calendarNow.get(Calendar.MONTH) == calendarBirth.get(Calendar.MONTH)) {
-			if (calendarNow.get(Calendar.DATE) < calendarBirth.get(Calendar.DATE)) {
+			if(calendarNow.get(Calendar.MONTH) < calendarBirth.get(Calendar.MONTH)) {
 				age -= 1;
+			}else if (calendarNow.get(Calendar.MONTH) == calendarBirth.get(Calendar.MONTH)) {
+				if (calendarNow.get(Calendar.DATE) < calendarBirth.get(Calendar.DATE)) {
+					age -= 1;
+				}
 			}
-		}
-		return age;
+			return age;
 		
 		} catch (ParseException e) {
 			e.printStackTrace();
 			return 0;
+		}
+	}
+	
+	public boolean generationalDivision(int age, int userAge) {
+		if(age >= 0 && age <= 60) {
+			if(age <= userAge && userAge <= age + 9) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			if(userAge >= 70) {
+				return true;
+			} else {
+				return false;
+			} 
 		}
 	}
 }

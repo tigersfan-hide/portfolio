@@ -23,22 +23,29 @@ public class AdminSalesManagementController {
 	}
 	
 	@GetMapping("/age")
-	public String salesByAge(Model model, int age) {
+	public String salesByAge(Model model) {
 		
-		int salesByAge = salesManagementService.getSalesByAge(age);
+		int[] ageGroup = {0, 10, 20, 30, 40, 50, 60, 70};
+		
+		int[] salesByAge = salesManagementService.getSalesByAge(ageGroup);
 		
 		model.addAttribute("salesByAge", salesByAge);
+		model.addAttribute("ageGroup", ageGroup);
 		
-		return "admin/sales/salebyage";
+		return "admin/sales/salesbyage";
 	}
 	
 	@GetMapping("/occupation")
-	public String salesByOccupation(Model model, Byte occupation) {
+	public String salesByOccupation(Model model) {
 		
-		int salesByAge = salesManagementService.getSalesByOccupation(occupation);
+		int[] occupationGroup = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+		String[] occupationNameGroup = {"公務員", "経営者・役員", "会社員", "自営業", "自由業", "専業主婦", "パート・アルバイト", "学生", "その他"};
 		
-		model.addAttribute("salesByAge", salesByAge);
+		int[] salesByOccupation = salesManagementService.getSalesByOccupation(occupationGroup);
 		
-		return "admin/sales/salebyoccupation";
+		model.addAttribute("occupationNameGroup", occupationNameGroup);
+		model.addAttribute("salesByOccupation", salesByOccupation);
+		
+		return "admin/sales/salesbyoccupation";
 	}
 }

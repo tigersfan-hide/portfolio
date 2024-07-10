@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.portfolio.form.SignupForm;
@@ -45,9 +46,10 @@ public class AuthController {
 						Model model
 						) {
 		if(signupForm.getRole().equals("ROLE_PAID")) {
+			userService.create(signupForm);
 			String sessionId = stripeService.createStripeSession(signupForm, httpServletRequest);
 			
-			return "";
+			return "redirect:/stripe-checkout?sessionId=" + sessionId;
 		}else{
 			if(userService.isEmailRegistered(signupForm.getEmail())) {
 				FieldError fieldError = new FieldError(bindingResult.getObjectName(), "email", "すでに登録済みのメールアドレスです。");
@@ -68,5 +70,13 @@ public class AuthController {
 			
 			return "redirect:/";
 		}
+	}
+	
+	@GetMapping("/stripe-checkout")
+	public String stripeCheckout(@RequestParam("sessionId") String sessionId, Model model) {
+		
+		model.addAttribute("sessionId", sessionId);
+		
+		return "auth/stripeCheckout";
 	}
 }

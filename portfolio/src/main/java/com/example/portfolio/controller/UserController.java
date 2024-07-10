@@ -62,4 +62,24 @@ public class UserController {
 		
 		return "redirect:/user";
 	}
+	
+	@GetMapping("/withdrawal")
+	public String withdrawal(@AuthenticationPrincipal UserDetailsImpl userDetailsImpl, Model model) {
+		User user = userRepository.getReferenceById(userDetailsImpl.getUser().getId());
+		UserEditForm userEditForm = new UserEditForm(user.getId(), user.getName(),user.getFurigana(), user.getPhoneNumber(), user.getEmail(), user.getBirthday(), user.getOccupation());
+		
+		model.addAttribute("userEditForm", userEditForm);
+		
+		return "user/withdrawal";
+	}
+	
+	@PostMapping("/withdrawal")
+	public String delete(@ModelAttribute @Validated UserEditForm userEditForm, RedirectAttributes redirectAttributes) {
+		
+		userService.withdrawal(userEditForm);
+		
+		System.out.println("退会します");
+		
+		return "redirect:/login";
+	}
 }

@@ -5,7 +5,7 @@
 		
 		<div th:replace="~{fragment :: styles}"></div>
 		
-		<title>年齢別売上詳細</title>
+		<title>職業別売上詳細</title>
 	</head>
 	<body>
 		<div class="nagoyameshi-wrapper">
@@ -14,6 +14,13 @@
 				<div class="container pt-4 pb-5 nagoyameshi-container">
 					<div class="row justify-content-center">
 						<div class="col-xxl-9 col-xl-10 col-lg-11">
+							<nav class="mb-4" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+								<ol class="breadcrumb">
+									<li class="breadcrumb-item"><a th:href="@{/admin/sales}">売上管理トップページ</a></li>
+									<li class="breadcrumb-item active" aria-current="page">職業別売上詳細</li>
+								</ol>
+							</nav>
+							
 							<h1 class="mb-4 text-center">民宿一覧</h1>
 							
 							<table class="table">
@@ -24,9 +31,9 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="salesByAge : salesByAge">
-										<td th:text="${salesByAge}"></td>
-										<td th:text="${salesByAge}"></td>
+									<tr th:each="sales, iterStat : ${salesByOccupation}">
+										<td th:text="${occupationNameGroup[iterStat.index]}"></td>
+										<td th:text="${sales}"></td>
 									</tr>
 								</tbody>
 							</table>
