@@ -1,5 +1,11 @@
 package com.example.portfolio.service;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,6 +14,7 @@ import com.example.portfolio.entity.Role;
 import com.example.portfolio.entity.User;
 import com.example.portfolio.form.SignupForm;
 import com.example.portfolio.form.UserEditForm;
+import com.example.portfolio.form.WithdrawalForm;
 import com.example.portfolio.repository.RoleRepository;
 import com.example.portfolio.repository.UserRepository;
 
@@ -58,9 +65,8 @@ public class UserService {
 	}
 	
 	@Transactional
-	public void withdrawal(UserEditForm userEditForm) {
-		User user = userRepository.getReferenceById(userEditForm.getId());
-		
+	public void withdrawal(WithdrawalForm withdrawalForm) {
+		User user = userRepository.getReferenceById(withdrawalForm.getId());
 		user.setDeleteFlag((byte) 0);
 		
 		userRepository.save(user);
@@ -79,5 +85,26 @@ public class UserService {
 	 	 User currentUser = userRepository.getReferenceById(userEditForm.getId());
 	 	 return !userEditForm.getEmail().equals(currentUser.getEmail());
 	 }
+	
+	 @Scheduled(cron = "0 0 0 * * ?")
+	 @Transactional
+	 public void deleteOldWithdrawnUsers() {
+		 List<User> userList = userRepository.findAll();
+		 Date date = new Date();
+		 Calendar calendar = Calendar.getInstance();
+		 calendar.setTime(date);
+		 calendar.add(Calendar.MONTH, -6);
+		 Date thresholdDate = calendar.getTime();
+		 List<User> usersToDelete = new ArrayList<>();
+		
+		 for(User user : userList) {
+			 if(user.getDeleteFlag() == 0 && user.getUpdatedAt().before(thresholdDate)) {
+				 usersToDelete.add(user);
+			 }
+		 }
 		 
+		for(User user : usersToDelete) {
+			userRepository.delete(user);
+		} 
+	 }
 }

@@ -22,17 +22,17 @@ public class SalesManagementService {
 	
 	int price = 500;
 	
-	public int getSalesByPeriod() {
-		List<User> users = userRepository.findAll();
-		
-		List<User> userByPeriodrList = users.stream()
-				.filter(user -> user.getRole().getId() == 3)
-				.collect(Collectors.toList());
-		
-		int SalesByPeriod = price * userByPeriodrList.size();
-		
-		return SalesByPeriod;
-	}
+//	public int getSalesByPeriod() {
+//		List<User> users = userRepository.findAll();
+//		
+//		List<User> userByPeriodrList = users.stream()
+//				.filter(user -> user.getRole().getId() == 3)
+//				.collect(Collectors.toList());
+//		
+//		int SalesByPeriod = price * userByPeriodrList.size();
+//		
+//		return SalesByPeriod;
+//	}
 	
 	public int[] getSalesByAge(int[] ageList) {
 		List<User> users = userRepository.findAll();

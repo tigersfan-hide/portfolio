@@ -17,7 +17,7 @@ public class StripeService {
     private String stripeApiKey;
 	
 	public String createStripeSession(SignupForm signupForm, HttpServletRequest httpServletRequest) {
-		Stripe.apiKey = "stripeApiKey";
+		Stripe.apiKey = stripeApiKey;
 		String requestUrl = new String(httpServletRequest.getRequestURL());
 		SessionCreateParams params =
 			SessionCreateParams.builder()

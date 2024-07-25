@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.portfolio.entity.User;
 import com.example.portfolio.form.UserEditForm;
+import com.example.portfolio.form.WithdrawalForm;
 import com.example.portfolio.repository.UserRepository;
 import com.example.portfolio.security.UserDetailsImpl;
 import com.example.portfolio.service.UserService;
@@ -23,6 +24,7 @@ import com.example.portfolio.service.UserService;
 public class UserController {
 	private final UserRepository userRepository;
 	private final UserService userService;
+	
 	public UserController(UserRepository userRepository, UserService userService) {
 		this.userRepository = userRepository;
 		this.userService = userService;
@@ -66,19 +68,16 @@ public class UserController {
 	@GetMapping("/withdrawal")
 	public String withdrawal(@AuthenticationPrincipal UserDetailsImpl userDetailsImpl, Model model) {
 		User user = userRepository.getReferenceById(userDetailsImpl.getUser().getId());
-		UserEditForm userEditForm = new UserEditForm(user.getId(), user.getName(),user.getFurigana(), user.getPhoneNumber(), user.getEmail(), user.getBirthday(), user.getOccupation());
+		WithdrawalForm withdrawalForm = new WithdrawalForm(user.getId(), user.getDeleteFlag(), user.getUpdatedAt());
 		
-		model.addAttribute("userEditForm", userEditForm);
+		model.addAttribute("withdrawalForm", withdrawalForm);
 		
 		return "user/withdrawal";
 	}
 	
 	@PostMapping("/withdrawal")
-	public String delete(@ModelAttribute @Validated UserEditForm userEditForm, RedirectAttributes redirectAttributes) {
-		
-		userService.withdrawal(userEditForm);
-		
-		System.out.println("退会します");
+	public String delete(@ModelAttribute @Validated WithdrawalForm withdrawalForm, RedirectAttributes redirectAttributes){
+		userService.withdrawal(withdrawalForm);
 		
 		return "redirect:/login";
 	}
