@@ -24,9 +24,9 @@
 					</div>
 					
 					<div class="d-flex justify-content-center">
-						<form>
+						<form method="get" th:action="@{/}">
 							<div class="input-group mb-3">
-								<input type="text" class="form-control" placeholder="店舗名・エリア" name="keyword">
+								<input type="text" class="form-control" placeholder="店舗名・エリア" name="keyword" th:value="${keyword}">
 								<button type="submit" class="btn btn-primary text-white">検索</button> 
 							</div>
 						</form>

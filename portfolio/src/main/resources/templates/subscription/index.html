@@ -1,26 +1,51 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-	<head>
-		<div th:replace="~{fragment :: meta}"></div>
-		
-		<div th:replace="~{fragment :: styles}"></div>
-		
-		<title>有料会員</title>
-	</head>
-	<body>
-		<div class="nagoyameshi-wrapper">
-			<div th:replace="~{fragment :: header}"></div>
-			<main>
-				<div class="container pt-4 pb-4 nagoyameshi-container">
-					<h2 class="text-center">予約やレビューを投稿するに有料会員登録が必要です</h2>
-					
-					<div class="d-flex justify-content-center">
-						<span><a href="#">こちらから有料会員登録する</a></span>
-					</div>
-				</div>
-			</main>
-			<div th:replace="~{fragment :: footer}"></div>
-		</div>
-		<div th:replace="~{fragment :: scripts}"></div>
-	</body>
+
+<head>
+	<div th:replace="~{fragment :: meta}"></div>
+
+	<div th:replace="~{fragment :: styles}"></div>
+
+	<title>有料会員</title>
+</head>
+
+<body>
+	<!-- https://docs.stripe.com/payments/save-card-without-authentication を参照 -->
+	<div class="nagoyameshi-wrapper">
+		<div th:replace="~{fragment :: header}"></div>
+		<main>
+			<div class="container pt-4 pb-4 nagoyameshi-container">
+				<h2 class="text-center">予約やレビューを投稿するに有料会員登録が必要です</h2>
+
+				<!--<div class="d-flex justify-content-center">-->
+					<span>こちらから有料会員登録する</span>
+
+                 	<!-- 追加 -->
+					<form  th:action="@{/subscription/create}" method="post" id="payment-form">
+						<div class="form-row">
+							<input id="cardholder-name" type="text" placeholder="カード名義人" required>
+							<div id="card-element">
+								<!-- A Stripe Element will be inserted here. -->
+							</div>
+
+							<!-- Used to display Element errors. -->
+							<div id="card-errors" role="alert"></div>
+						</div>
+
+						<button id="card-button">Submit Payment</button>
+					</form>
+					<!-- 追加 -->
+
+				<!--</div>-->
+			</div>
+		</main>
+		<div th:replace="~{fragment :: footer}"></div>
+	</div>
+	<div th:replace="~{fragment :: scripts}"></div>
+	<!-- 追加 -->
+	<script src="https://js.stripe.com/v3/"></script>
+	<script th:src="@{/js/stripe.js}"></script>
+	<!-- 追加 -->
+</body>
+
 </html>

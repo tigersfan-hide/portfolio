@@ -21,22 +21,24 @@ public class HomeController {
 	}
 
 	@GetMapping("/")
-	public String index(Model model, 
-						@PageableDefault(page=0, size=10, sort="id", direction=Direction.ASC)Pageable pageable, 
-						@RequestParam(name = "keyword", required = false) String keyword, 
-						@RequestParam(name = "categoryId", required = false)Byte categoryId) {
+	public String index(@RequestParam(name = "keyword", required = false) String keyword, 
+						@RequestParam(name = "categoryId", required = false)Byte categoryId,
+						@PageableDefault(page=0, size=10, sort="id", direction=Direction.ASC) Pageable pageable,
+						Model model) {
 		
 		Page<Restaurant> restaurantPage;
 		
 		if(keyword != null && !keyword.isEmpty()) {
-			restaurantPage = restaurantRepository.findByNameLikeAndAddressLike("%" + keyword + "%", "%" + keyword + "%", pageable);
-		}else if(categoryId != null){
+			restaurantPage = restaurantRepository.findByNameLikeOrAddressLike("%" + keyword + "%", "%" + keyword + "%", pageable);
+			}else if(categoryId != null){
 			restaurantPage = restaurantRepository.findByCategoryId(categoryId, pageable);
 		}else {
 			restaurantPage = restaurantRepository.findAll(pageable);
 		}
 		
 		model.addAttribute("restaurantPage", restaurantPage);
+		model.addAttribute("keyword", keyword);
+//		model.addAttribute(categoryId);
 		
 		return "index";
 	}
