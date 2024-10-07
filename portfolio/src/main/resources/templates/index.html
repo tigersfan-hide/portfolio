@@ -31,25 +31,37 @@
 							</div>
 						</form>
 					</div>
+					
+					<div>
+						<form method="get" th:action="@{/}">
+							<input th:if="${keyword}" type="hidden" name="keyword" th:value="${keyword}">
+							<input th:if="${categoryId}" type="hidden" name="categoryId" th:value="${categoryId}">
+							<select class="form-select" name="order" onChange="this.form.submit();">
+								<option value="IdAsc" th:selected="${order == 'IdAsc' || order == null}">昇順</option>
+								<option value="IdDesc" th:selected="${order == 'IdDesc'}">降順</option>
+							</select>
+						</form>
+					</div>
+					
 					<div class="categoty-group mb-3">
 						<h2 class="mb-3 text-center">カテゴリーから探す</h2>
 						<form>
 							<div class="form-group row mb-3">
 								<select type="number" class="form-control" name="categoryId">
 									<option selected value="">カテゴリー</option>
-									<option value="1">焼肉</option>
-									<option value="2">ラーメン</option>
-									<option value="3">鉄板料理</option>
-									<option value="4">居酒屋</option>
-									<option value="5">イタリアン</option>
-									<option value="6">中華料理</option>
-									<option value="7">日本料理</option>
-									<option value="8">フレンチ</option>
-									<option value="9">韓国料理</option>
-									<option value="10">カフェ</option>
-									<option value="11">鍋料理</option>
-									<option value="12">名古屋名物</option>
-									<option value="13">その他</option>
+									<option value="1" selected="焼肉">焼肉</option>
+									<option value="2" selected="ラーメン">ラーメン</option>
+									<option value="3" selected="鉄板料理">鉄板料理</option>
+									<option value="4" selected="居酒屋">居酒屋</option>
+									<option value="5" selected="イタリアン">イタリアン</option>
+									<option value="6" selected="中華料理">中華料理</option>
+									<option value="7" selected="日本料理">日本料理</option>
+									<option value="8" selected="フレンチ">フレンチ</option>
+									<option value="9" selected="韓国料理">韓国料理</option>
+									<option value="10" selected="カフェ">カフェ</option>
+									<option value="11" selected="鍋料理">鍋料理</option>
+									<option value="12" selected="名古屋名物">名古屋名物</option>
+									<option value="13" selected="その他">その他</option>
 								</select>
 								<button type="submit" class="btn btn-primary text-white">検索</button>
 							</div>

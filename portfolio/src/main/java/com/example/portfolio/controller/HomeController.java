@@ -1,8 +1,9 @@
 package com.example.portfolio.controller;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,21 +24,46 @@ public class HomeController {
 	@GetMapping("/")
 	public String index(@RequestParam(name = "keyword", required = false) String keyword, 
 						@RequestParam(name = "categoryId", required = false)Byte categoryId,
-						@PageableDefault(page=0, size=10, sort="id", direction=Direction.ASC) Pageable pageable,
+						@RequestParam(name = "order", required = false)String order,
+						@PageableDefault(page=0, size=10) Pageable pageable,
 						Model model) {
+		
+		Sort sort = Sort.by("id");
+		if(order != null && order.equals("IdDesc")) {
+			sort = sort.descending();
+		} else {
+			sort = sort.ascending();
+		}
+		pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
 		
 		Page<Restaurant> restaurantPage;
 		
 		if(keyword != null && !keyword.isEmpty()) {
 			restaurantPage = restaurantRepository.findByNameLikeOrAddressLike("%" + keyword + "%", "%" + keyword + "%", pageable);
-			}else if(categoryId != null){
+//			if(order != null && order.equals("IdDesc")) {
+//				restaurantPage = restaurantRepository.findByNameLikeOrAddressLikeOrderByIdDesc("%" + keyword + "%", "%" + keyword + "%", pageable);
+//			} else {
+//				restaurantPage = restaurantRepository.findByNameLikeOrAddressLikeOrderByIdAsc("%" + keyword + "%", "%" + keyword + "%", pageable);
+//			}
+		}else if(categoryId != null){
 			restaurantPage = restaurantRepository.findByCategoryId(categoryId, pageable);
+//			if(order != null && order.equals("IdDesc")) {
+//				restaurantPage = restaurantRepository.findByCategoryIdOrderByIdDesc(categoryId, pageable);
+//			} else {
+//				restaurantPage = restaurantRepository.findByCategoryIdOrderByIdAsc(categoryId, pageable);
+//			}
 		}else {
 			restaurantPage = restaurantRepository.findAll(pageable);
+//			if(order != null && order.equals("IdDesc")) {
+//				restaurantPage = restaurantRepository.findAllOrderByIdDesc(pageable);
+//			} else {
+//				restaurantPage = restaurantRepository.findAllOrderByIdAsc(pageable);
+//			}
 		}
 		
 		model.addAttribute("restaurantPage", restaurantPage);
 		model.addAttribute("keyword", keyword);
+		model.addAttribute("order", order);
 //		model.addAttribute(categoryId);
 		
 		return "index";
