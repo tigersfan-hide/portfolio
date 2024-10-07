@@ -124,6 +124,7 @@ public class SubscriptionController {
     	
     	
         // 5.一覧へリダイレクト
+//        return "index";
         return "redirect:/";
     } 
     	

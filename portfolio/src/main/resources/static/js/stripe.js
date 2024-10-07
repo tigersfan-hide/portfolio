@@ -1,4 +1,4 @@
-const stripe = Stripe('pk_test_51OwE40P33UzMHrzCztO6MRY6NsSIQ3aZxjrTDQmKswbvLGwtZuaNxJYVOKas958BkY5zjpE22OC5eCx4A05xr0nx00Uvd436QCpk_test_51OwE40P33UzMHrzCztO6MRY6NsSIQ3aZxjrTDQmKswbvLGwtZuaNxJYVOKas958BkY5zjpE22OC5eCx4A05xr0nx00Uvd436QC');
+const stripe = Stripe('pk_test_51OwE40P33UzMHrzCztO6MRY6NsSIQ3aZxjrTDQmKswbvLGwtZuaNxJYVOKas958BkY5zjpE22OC5eCx4A05xr0nx00Uvd436QC');
 
 const elements = stripe.elements();
 const cardElement = elements.create('card');
