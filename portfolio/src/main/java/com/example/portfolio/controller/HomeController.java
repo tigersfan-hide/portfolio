@@ -64,7 +64,6 @@ public class HomeController {
 		model.addAttribute("restaurantPage", restaurantPage);
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("order", order);
-//		model.addAttribute(categoryId);
 		
 		return "index";
 	}

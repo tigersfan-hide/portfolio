@@ -77,7 +77,7 @@ public class SubscriptionController {
     // (最終的にはデータベースのテーブル項目へ追加予定)
     private String subscriptionId = null;
     
-	@GetMapping("/recommend")
+	@GetMapping
 	public String index() {
 		return "/subscription/index";
 	}

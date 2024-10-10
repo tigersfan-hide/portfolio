@@ -21,8 +21,17 @@
 					<span>こちらから有料会員登録する</span>
 
                  	<!-- 追加 -->
-					<form  th:action="@{/subscription/create}" method="post" id="payment-form">
+					<form  th:action="@{/subscription/create}" method="post" id="payment-form" th:object="${signupForm}">
 						<div class="form-row">
+<!--							<input type="hidden" th:field="name">-->
+<!--							<input type="hidden" th:field="furigana">-->
+<!--							<input type="hidden" th:field="phoneNumber">-->
+<!--							<input type="hidden" th:field="email">-->
+<!--							<input type="hidden" th:field="birthday">-->
+<!--							<input type="hidden" th:field="password">-->
+<!--							<input type="hidden" th:field="role">-->
+<!--							<input type="hidden" th:field="occupation">-->
+<!--							<input type="hidden" th:field="passwordConfirmation">-->
 							<input id="cardholder-name" type="text" placeholder="カード名義人" required>
 							<div id="card-element">
 								<!-- A Stripe Element will be inserted here. -->
