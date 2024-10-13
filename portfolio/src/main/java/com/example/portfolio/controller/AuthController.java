@@ -18,11 +18,13 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class AuthController {
+//	private final UserRepository userRepository;
 	private final UserService userService;
 //	private final StripeService stripeService;
 	
 	public AuthController(UserService userService) {
 		this.userService = userService;
+//		this.userRepository = userRepository;
 //		this.stripeService = stripeService;
 	}
 	
@@ -50,29 +52,34 @@ public class AuthController {
 //			
 //			return "redirect:/stripe-checkout?sessionId=" + sessionId;
 //		}else{
-		
-		if(userService.isEmailRegistered(signupForm.getEmail())) {
-			FieldError fieldError = new FieldError(bindingResult.getObjectName(), "email", "すでに登録済みのメールアドレスです。");
-			bindingResult.addError(fieldError); 			
-		}
-			
-		if(!userService.isSamePassword(signupForm.getPassword(), signupForm.getPasswordConfirmation())) {
-			FieldError fieldError2 = new FieldError(bindingResult.getObjectName(), "password", "パスワードが一致しません。");
-			bindingResult.addError(fieldError2);
-		}
-			
-		if(bindingResult.hasErrors()) {
-			return "auth/signup";
-		}
-			
-		userService.create(signupForm);
 			
 		if(signupForm.getRole().equals("ROLE_PAID")) {
+
+			model.addAttribute("signupForm", signupForm);
 			
 			return "/subscription/index";
 			
 		}	else {
+			
+			if(userService.isEmailRegistered(signupForm.getEmail())) {
+				FieldError fieldError = new FieldError(bindingResult.getObjectName(), "email", "すでに登録済みのメールアドレスです。");
+				bindingResult.addError(fieldError); 			
+			}
+				
+			if(!userService.isSamePassword(signupForm.getPassword(), signupForm.getPasswordConfirmation())) {
+				FieldError fieldError2 = new FieldError(bindingResult.getObjectName(), "password", "パスワードが一致しません。");
+				bindingResult.addError(fieldError2);
+			}
+				
+			if(bindingResult.hasErrors()) {
+				return "auth/signup";
+			}
+				
+			userService.create(signupForm);
+			
+			
 			redirectAttributes.addFlashAttribute("successMessage", "会員登録が完了しました。");			
+			
 			return "redirect:/";
 		}
 		

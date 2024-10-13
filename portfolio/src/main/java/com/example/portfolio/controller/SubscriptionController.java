@@ -35,6 +35,8 @@ package com.example.portfolio.controller;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,6 +44,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.portfolio.entity.User;
+import com.example.portfolio.form.SignupForm;
 import com.example.portfolio.repository.UserRepository;
 import com.example.portfolio.security.UserDetailsImpl;
 import com.example.portfolio.service.StripeService;
@@ -58,7 +61,7 @@ public class SubscriptionController {
 	// 0.サービスと連動させるためにフィールドへ追加
     private final UserRepository userRepository;
     private final StripeService stripeService; 
-//	private final UserService userService;
+	private final UserService userService;
 //	private HttpSession session;
 	
 	// 0.サービスクラスと連携させるためにコンストラクタで初期化対応
@@ -69,8 +72,8 @@ public class SubscriptionController {
 			UserRepository userRepository) {
 		this.userRepository = userRepository;
 		this.stripeService = stripeService;
+		this.userService = userService;
 //		this.session = session;
-//		this.userService = userService;
 	}
 	
     // 0.サブスクリプションをキャンセルするためにカスタマーIDをフィールドへ持たせる
@@ -90,7 +93,7 @@ public class SubscriptionController {
 
     // jsファイルで作成したPaymentMethodから受け取られたpaymentMethodIdを利用してカスタマーを作成、値を取得
     @PostMapping("/create")
-    public String create(@AuthenticationPrincipal UserDetailsImpl userDetailsImpl, @RequestParam String paymentMethodId, RedirectAttributes redirectAttributes) {      
+    public String create(@AuthenticationPrincipal UserDetailsImpl userDetailsImpl, SignupForm signupForm, @RequestParam String paymentMethodId, BindingResult bindingResult, RedirectAttributes redirectAttributes) {      
 //    public String create(@RequestParam String paymentMethodId, RedirectAttributes redirectAttributes) {      
 
     	// セッション情報を取得
@@ -100,15 +103,23 @@ public class SubscriptionController {
 //            return "redirect:/";
 //    	}
 //    	
-    	// 1.ログインした際に格納されるuserDetailsImplを利用してログイン情報をテーブルから取得
-    	// そのままログイン情報を利用すると、ユーザーが更新された後の場合に前の情報を見てしまうため
-    	User user = userRepository.getReferenceById(userDetailsImpl.getUser().getId());
+    	if(userDetailsImpl != null){
+    		 // ログイン時の処理
+    		// 1.ログインした際に格納されるuserDetailsImplを利用してログイン情報をテーブルから取得
+    		// そのままログイン情報を利用すると、ユーザーが更新された後の場合に前の情報を見てしまうため
+    		User user = userRepository.getReferenceById(userDetailsImpl.getUser().getId());
+    		
+    		// 2.カストマー情報をサービスクラス経由で作成、支払い情報へ追加して更新
+    		// https://docs.stripe.com/api/customers/create
+    		// https://docs.stripe.com/payments/checkout/subscriptions/update-payment-details#set-default-payment-method
+    		Customer customer = stripeService.createCustomer(user.getName(), user.getEmail(), paymentMethodId);
+    		
+    		}else{
+    		 // ログインしていない場合の処理
+    		Customer customer = stripeService.createCustomer(signupForm.getName(), signupForm.getEmail() ,paymentMethodId);
+    		
+    		}
     	
-    	// 2.カストマー情報をサービスクラス経由で作成、支払い情報へ追加して更新
-    	// https://docs.stripe.com/api/customers/create
-    	// https://docs.stripe.com/payments/checkout/subscriptions/update-payment-details#set-default-payment-method
-    	Customer customer = stripeService.createCustomer(user.getName(), user.getEmail(), paymentMethodId);
-        
     	// 3.サブスクリプションの登録
     	// https://docs.stripe.com/api/subscriptions/create
     	Subscription subscription = stripeService.createSubscription(customer.getId());
@@ -121,8 +132,24 @@ public class SubscriptionController {
 
         // テーブルへ会員情報を登録(ただしtry~catchでエラー時の対応も必要)
 //    	userService.create(signupForm);
-    	
-    	
+    	if(userDetailsImpl != null) {
+    		if(userService.isEmailRegistered(signupForm.getEmail())) {
+    			FieldError fieldError = new FieldError(bindingResult.getObjectName(), "email", "すでに登録済みのメールアドレスです。");
+    			bindingResult.addError(fieldError); 			
+    		}
+    			
+    		if(!userService.isSamePassword(signupForm.getPassword(), signupForm.getPasswordConfirmation())) {
+    			FieldError fieldError2 = new FieldError(bindingResult.getObjectName(), "password", "パスワードが一致しません。");
+    			bindingResult.addError(fieldError2);
+    		}
+    			
+    		if(bindingResult.hasErrors()) {
+    			return "auth/signup";
+    		}
+    			
+    		userService.create(signupForm);
+    		
+    	}
         // 5.一覧へリダイレクト
 //        return "index";
         return "redirect:/";
