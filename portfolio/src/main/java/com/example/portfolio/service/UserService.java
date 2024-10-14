@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.portfolio.entity.Role;
 import com.example.portfolio.entity.User;
+import com.example.portfolio.form.ChangedGradeForm;
 import com.example.portfolio.form.SignupForm;
 import com.example.portfolio.form.UserEditForm;
 import com.example.portfolio.form.WithdrawalForm;
@@ -107,4 +108,16 @@ public class UserService {
 			userRepository.delete(user);
 		} 
 	 }
+	 
+	 @Transactional
+	 public  void changedGrade(ChangedGradeForm changedGradeForm) {
+		 
+		 User user = userRepository.getReferenceById(changedGradeForm.getId());
+		 
+		 user.setSubscriptionId(changedGradeForm.getSubscriptionId());
+		 user.setChangedGradeAt(changedGradeForm.getChangedGradeAt());
+		 
+		 userRepository.save(user);
+	 }
+	 
 }

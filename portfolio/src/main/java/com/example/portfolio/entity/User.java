@@ -46,6 +46,9 @@ public class User {
 	@JoinColumn(name = "role_id")
 	private Role role;
 	
+	@Column(name = "subscription_id")
+	private String subscriptionId;
+	
 	@Column(name = "delete_flag")
 	private Byte deleteFlag;
 	
@@ -54,4 +57,7 @@ public class User {
 
 	@Column(name = "updated_at", insertable = false, updatable = false)
 	private Timestamp updatedAt;
+	
+	@Column(name = "changed_grade_at", insertable = false, updatable = false)
+	private Timestamp changedGradeAt;
 }
